@@ -1,0 +1,26 @@
+<launch>
+  <!-- visualize ridgeback/sawyer robot in rviz -->
+
+
+  <!-- set environment variables for sensor configuration  -->
+  <!-- <include file = "$(find sawback_description)/launch/sawback_environment.launch" /> -->
+
+
+  <!-- arg to use gui -->
+  <arg name="use_jsp_gui" default="false" doc="Launch the joint_state_publisher gui to publish joint angles"/>
+
+  <!-- load model into parameter server -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find sawback_description)/urdf/sawback.urdf.xacro'"/>
+
+  <!-- robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- joint state publisher -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(eval use_jsp_gui)"/>
+
+  <!-- rviz is a required package -->
+  <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find sawback_description)/config/ridgeback_sawyer.rviz"/>
+
+
+
+</launch>

@@ -1,0 +1,7 @@
+# The dual_laser configuration of Ridgeback with
+# the Hokuyo UST-10LX LIDAR on the front and rear
+# velodyne 16 lidar, bumblebee camera, sawyer computer
+
+RIDGEBACK_FRONT_HOKUYO_LASER=1
+RIDGEBACK_REAR_HOKUYO_LASER=1
+RIDGEBACK_URDF_EXTRAS=/home/bostoncleek/manip_ws/src/sawyer_robot/sawyer_description/urdf/nu_ridgeback_extras.urdf.xacro

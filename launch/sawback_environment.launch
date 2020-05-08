@@ -1,0 +1,15 @@
+<launch>
+  <!-- Sets environment variables for the sawback description -->
+
+  <!-- enable front and rear Hokuyo lidar sensors -->
+  <env name="RIDGEBACK_FRONT_HOKUYO_LASER" value="1"/>
+  <env name="RIDGEBACK_REAR_HOKUYO_LASER" value="1"/>
+  <env name="RIDGEBACK_URDF_EXTRAS" value="$(find sawback_description)/urdf/nu_ridgeback_extras.urdf.xacro"/>
+
+
+  <!-- <param name="RIDGEBACK_FRONT_HOKUYO_LASER" value="1"/>
+  <param name="RIDGEBACK_REAR_HOKUYO_LASER" value="1"/>
+  <param name="RIDGEBACK_URDF_EXTRAS" value="$(find sawback_description)/urdf/nu_ridgeback_extras.urdf.xacro"/> -->
+
+
+</launch>
