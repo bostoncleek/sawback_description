@@ -1,0 +1,17 @@
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <plugin name="ridgeback_joint_plugin" filename="libsawback_description_plugin.so">
+      <ridgeback_link>"base_link"</ridgeback_link>
+      <sawyer_link>"base"</sawyer_link>
+      <joint_name>"sawyer_base_joint"</joint_name>
+    </plugin>
+  </world>
+</sdf>
