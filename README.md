@@ -8,9 +8,15 @@ This package contains the files required for simulating the Sawback in gazebo an
 # How to run:
 The easiest way to get started is to download the rosinstall file or you will need the required packages bellow. In the src/ folder of your workspace run the following:
 
+`mkdir -p catkin_ws/src` <br/>
+`cd ~/catkin_ws/src` <br/>
 `wstool init .` <br/>
 `wstool merge -t . https://raw.githubusercontent.com/bostoncleek/sawback_description/master/sawback.rosinstall` <br/>
-`wstool update -t .`
+`wstool update -t .` <br/>
+`cd ~/catkin_ws` <br/>
+`catkin_make`
+
+
 
 You may also need to install the `velodyne-gazebo-plugins` package and the `effort_controllers` package.
 
