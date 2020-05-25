@@ -3,40 +3,18 @@
   <!-- arg to use gui -->
   <arg name="use_jsp_gui" default="false" doc="Launch the joint_state_publisher gui to publish joint angles"/>
 
+  <!-- load urdf containing both sawyer and the ridgeback  -->
+  <param name="robot_description"
+     command="$(find xacro)/xacro $(find sawback_description)/urdf/sawback.urdf.xacro
+           gazebo:=false electric_gripper:=true
+           pedestal:=false static:=false"/>
 
-  <group ns="ridgeback">
-    <!-- load urdf onto parameter server -->
-    <param name="robot_description"
-        command="$(find xacro)/xacro '$(find sawback_description)/urdf/nu_ridgeback.urdf.xacro'"/>
+ <!-- joint state publisher  -->
+ <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(eval use_jsp_gui)"/>
+ <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(eval use_jsp_gui)"/>
 
-    <!-- joint state publisher  -->
-    <node name="joint_state_publisher_ridgeback" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(eval use_jsp_gui)"/>
-    <node name="joint_state_publisher_ridgeback_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(eval use_jsp_gui)"/>
-
-    <!-- robot state publisher -->
-    <node name="robot_state_publisher_ridgeback" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  </group>
-
-
-  <group ns="sawyer">
-    <!-- load urdf onto parameter server -->
-    <param name="robot_description"
-        command="$(find xacro)/xacro $(find sawyer_description)/urdf/sawyer.urdf.xacro
-        gazebo:=false electric_gripper:=true
-        pedestal:=false static:=false"/>
-
-    <!-- joint state publisher  -->
-    <node name="joint_state_publisher_sawyer" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(eval use_jsp_gui)"/>
-    <node name="joint_state_publisher_sawyer_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(eval use_jsp_gui)"/>
-
-    <!-- robot state publisher -->
-    <node name="robot_state_publisher_sawyer" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  </group>
-
-
-  <!-- tf between ridgeback and sawyer -->
-  <node pkg="tf2_ros" type="static_transform_publisher"
-	name="ridgeback_to_sawyer" args="0 0 0.0127 0 0 0 1 sawyer_mount_link base"/>
+ <!-- robot state publisher -->
+ <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
 
   <!-- rviz is a required package -->
