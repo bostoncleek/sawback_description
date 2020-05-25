@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<robot name="nu_ridgeback" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- ridgeback -->
+  <xacro:include filename="$(find ridgeback_description)/urdf/ridgeback.urdf.xacro"/>
+
+  <!-- velodyne 16 lidar, bumblebee camera, sawyer computer -->
+  <xacro:include filename="$(find sawback_description)/urdf/nu_ridgeback_extras.urdf.xacro"/>
+
+  <!-- NU ridgeback gazebo  -->
+  <xacro:include filename="$(find sawback_description)/urdf/nu_ridgeback.gazebo.xacro"/>
+
+
+  <!-- velodyne 16 lidar -->
+  <xacro:include filename="$(find sawback_description)/urdf/VLP-16.gazebo.xacro"/>
+  <xacro:VLP-16 name="velodyne_scan" topic="velodyne/velodyne_points"/>
+
+  <!-- bumblebee 2 camera -->
+  <xacro:include filename="$(find sawback_description)/urdf/bumblebee2.gazebo.xacro"/>
+  <xacro:BB2 camera_link="bb2_origin" camera_optical_link="bb2_optical_link"/>
+
+  <!-- hokuyo lidar  -->
+  <xacro:include filename="$(find ridgeback_description)/urdf/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
+
+  <!-- hokuyo lidar front  -->
+  <xacro:hokuyo_ust-10lx_mount prefix="front"
+                               topic="front/scan"
+                               location="1" />
+
+ <!-- hokuyo lidar rear -->
+ <xacro:hokuyo_ust-10lx_mount prefix="rear"
+                              topic="rear/scan"
+                              location="-1" />
+
+  <!-- mount sawyer -->
+  <link name="mount_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="0.004086"  ixy="0"  ixz="0" iyy="0.004086" iyz="0" izz="0.008065" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.127" length="0.0254"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.127" length="0.0254"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="mount_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.280"/>
+    <parent link="base_link"/>
+    <child link="mount_link"/>
+  </joint>
+
+</robot>
