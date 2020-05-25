@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo reference="mount_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="controller_enclosure">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="velodyne_mesh">
+    <material>Gazebo/TurquoiseGlowOutline</material>
+  </gazebo>
+
+  <gazebo reference="bb2_mesh">
+    <material>Gazebo/TurquoiseGlowOutline</material>
+  </gazebo>
+</robot>
