@@ -1,6 +1,5 @@
 <launch>
   <!-- ridgeback-->
-
   <!-- Robot Spawn Pose -->
   <arg name="x" default="0.0" doc="x poisiton of sawback"/>
   <arg name="y" default="0.0" doc="y poisiton of sawback"/>
@@ -20,7 +19,6 @@
               ridgeback_joint_publisher
               ridgeback_velocity_controller" />
 
-<!-- namespace=/ridgeback -->
 
   <!-- localization -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" />
@@ -31,37 +29,13 @@
     <arg name="joystick" value="false"/>
   </include>
 
-
   <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
         args="cmd_vel ridgeback_velocity_controller/cmd_vel" />
 
-
   <node name="robot_state_publisher_ridgeback" pkg="robot_state_publisher" type="robot_state_publisher"/>
-
-<!--
-  <param name="robot_description"
-    command="$(find xacro)/xacro '$(find ridgeback_description)/urdf/ridgeback.urdf.xacro'"/> -->
 
   <param name="robot_description"
       command="$(find xacro)/xacro '$(find sawback_description)/urdf/nu_ridgeback.urdf.xacro'"/>
-
-
-  <!-- <node name="urdf_spawn_ridgeback" pkg="gazebo_ros" type="spawn_model"
-        args="-param robot_description -urdf -model nu_ridgeback
-                 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)"
-        respawn="false" output="screen"/> -->
-
-
-  <!-- <node name="sdf_spawn_ridgeback" pkg="gazebo_ros" type="spawn_model"
-        args="-file $(find sawback_description)/urdf/ridgeback.sdf -sdf -model ridgeback
-                 -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)"
-        respawn="false" output="screen"/> -->
-
-    <!-- <node name="sdf_spawn_ridgeback" pkg="gazebo_ros" type="spawn_model"
-          args="-sdf -file $(find ridgeback_description)/urdf/ridgeback.sdf  -model ridgeback
-                   -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)"
-          respawn="false" output="screen"/> -->
-
 
 
   <rosparam param="gazebo_ros_control/pid_gains">
@@ -82,5 +56,4 @@
       i: 0.1
       d: 0
   </rosparam>
-
 </launch>
