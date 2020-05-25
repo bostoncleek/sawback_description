@@ -44,7 +44,8 @@ To do both: <br/>
 3) ridgeback_control <br/>
 4) ridgeback_description <br/>
 5) sawyer_description <br/>
-6) sawyer_gazebo
+6) sawyer_gazebo <br/>
+7) sawyer_sim_controllers
 
 
 # Known Issues
