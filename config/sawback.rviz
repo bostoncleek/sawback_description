@@ -83,7 +83,24 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        bb2_mesh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bb2_optical_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        bb2_origin:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -92,7 +109,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        controller_enclosure:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         front_cover_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_laser:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -117,6 +144,15 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        head:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         imu_link:
           Alpha: 1
           Show Axes: false
@@ -130,7 +166,17 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         rear_cover_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_laser:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -155,50 +201,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        right_side_cover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        sawyer_mount_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-      Name: RobotModel
-      Robot Description: ridgeback/robot_description
-      TF Prefix: ""
-      Update Interval: 0
-      Value: true
-      Visual Enabled: true
-    - Alpha: 1
-      Class: rviz/RobotModel
-      Collision Enabled: false
-      Enabled: true
-      Links:
-        All Links Enabled: true
-        Expand Joint Details: false
-        Expand Link Details: false
-        Expand Tree: false
-        Link Tree Style: Links in Alphabetic Order
-        base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        head:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        head_camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         right_arm_base_link:
           Alpha: 1
           Show Axes: false
@@ -309,6 +311,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_side_cover_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_torso_itb:
           Alpha: 1
           Show Axes: false
@@ -322,13 +329,27 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        top_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         torso:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
+        velodyne_mesh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        velodyne_scan:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
-      Robot Description: sawyer/robot_description
+      Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
       Value: true
@@ -361,7 +382,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.894591212272644
+      Distance: 2.3423523902893066
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -376,10 +397,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5553981065750122
+      Pitch: 0.3253982365131378
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 6.103603363037109
+      Yaw: 4.958591938018799
     Saved: ~
 Window Geometry:
   Displays:
