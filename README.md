@@ -9,10 +9,10 @@ This package contains the files required for simulating the Sawback in gazebo an
 The easiest way to get started is to download the rosinstall file or you will need the required packages bellow. In the src/ folder of your workspace run the following:
 
 `wstool init .` <br/>
-`wstool merge . https://github.com/bostoncleek/sawback_description.git` <br/>
+`wstool merge -t . https://raw.githubusercontent.com/bostoncleek/sawback_description/master/sawback.rosinstall` <br/>
 `wstool update -t .`
 
-You may also need to install the `velodyne_gazebo_plugins` package.
+You may also need to install the `velodyne-gazebo-plugins` package and the `effort_controllers` package.
 
 
 You will need to modify two files in order for the the Sawback to come to life.
@@ -34,10 +34,11 @@ To do both: <br/>
 
 # Required Packages
 1) velodyne-gazebo-plugins <br/>
-2) ridgeback_control <br/>
-3) ridgeback_description <br/>
-4) sawyer_description <br/>
-5) sawyer_gazebo
+2) effort_controllers <br/>
+3) ridgeback_control <br/>
+4) ridgeback_description <br/>
+5) sawyer_description <br/>
+6) sawyer_gazebo
 
 
 # Known Issues

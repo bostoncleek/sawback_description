@@ -2,24 +2,24 @@
 <package format="2">
   <name>sawback_description</name>
   <version>0.0.1</version>
-  <description> Models of the ridgeback, sawyer, and sensors</description>
+  <description> The Sawback is the ruler of the Planet Omicron Persei 8 </description>
 
   <maintainer email="bostoncleek2020@u.northwestern.edu">bostoncleek</maintainer>
 
   <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>gazebo_ros</build_depend>
+  <!-- <build_depend>gazebo_ros</build_depend>
   <build_depend>gazebo</build_depend>
   <build_depend>roscpp</build_depend>
 
   <build_export_depend>gazebo_ros</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
-  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend> -->
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <gazebo_ros plugin_path="${prefix}/../../lib" gazebo_media_path="${prefix}"
-                gazebo_model_path="${prefix}/models" />
+    <!-- <gazebo_ros plugin_path="${prefix}/../../lib" gazebo_media_path="${prefix}"
+                gazebo_model_path="${prefix}/models" /> -->
   </export>
 </package>
