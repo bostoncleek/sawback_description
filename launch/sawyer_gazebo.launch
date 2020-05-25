@@ -1,0 +1,88 @@
+<launch>
+  <!-- sawyer -->
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="head_display_img" default="$(find sawyer_gazebo)/share/images/sawyer_sdk_research.png"/>
+
+  <!-- This argument loads the electric gripper, for example electric_gripper:=true -->
+  <arg name="electric_gripper" default="false"/>
+  <!-- This argument loads sawyer's pedestal URDF -->
+  <arg name="pedestal" default="false"/>
+  <!-- This argument fixes the robot statically to the world -->
+  <arg name="static" default="false"/>
+
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+      command="$(find xacro)/xacro $(find sawyer_description)/urdf/sawyer.urdf.xacro
+      gazebo:=true electric_gripper:=$(arg electric_gripper)
+      pedestal:=$(arg pedestal) static:=$(arg static)"/>
+
+  <param name="img_path_head_display" value="$(arg head_display_img)"/>
+  <param name="robot/limb/right/root_name" value="base" />
+
+
+  <!-- Load Parameters to the ROS Parameter Server -->
+  <rosparam command="load" file="$(find sawyer_gazebo)/config/config.yaml" />
+  <rosparam command="load" file="$(find sawyer_description)/params/named_poses.yaml" />
+  <rosparam command="load" file="$(find sawyer_gazebo)/config/acceleration_limits.yaml" />
+
+  <param if="$(arg electric_gripper)" name="robot/limb/right/tip_name"
+         value="right_gripper_tip" />
+  <param unless="$(arg electric_gripper)" name="robot/limb/right/tip_name"
+         value="right_hand" />
+
+  <param name="robot/limb/right/camera_name" value="right_hand_camera" />
+  <param if="$(arg electric_gripper)"     name="robot/limb/right/gravity_tip_name"
+         value="right_gripper_tip" />
+  <param unless="$(arg electric_gripper)" name="robot/limb/right/gravity_tip_name"
+         value="right_hand" />
+
+
+  <!-- Publish a static transform between the world and the base of the robot -->
+  <node if="$(arg static)" pkg="tf2_ros" type="static_transform_publisher"
+  name="base_to_world" args="0 0 0 0 0 0 1 world base" />
+
+
+  <!-- sawyer cameras launch file -->
+  <arg name="wrist_camera" default="right_hand_camera" />
+  <arg name="head_camera"  default="head_camera" />
+  <include file="$(find sawyer_gazebo)/launch/sawyer_sim_cameras.launch">
+      <arg name="wrist_camera" value="$(arg wrist_camera)" />
+      <arg name="head_camera" value="$(arg head_camera)" />
+  </include>
+
+
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find sawyer_sim_controllers)/config/sawyer_sim_controllers.yaml" command="load"/>
+
+  <!-- load the default "ON" controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false"
+        output="screen" ns="/robot" args="spawn
+                                         joint_state_controller
+                                         right_joint_gravity_controller
+                                         right_joint_position_controller" />
+
+  <!-- load the default "OFF" controllers -->
+  <node name="controller_spawner_stopped" pkg="controller_manager" type="controller_manager" respawn="false"
+       output="screen" ns="/robot" args="load
+                                         right_joint_velocity_controller
+                                         right_joint_effort_controller
+                                         head_position_controller"/>
+
+  <!-- load the Electric Gripper controllers if args set -->
+  <rosparam if="$(arg electric_gripper)" command="load"
+      file="$(find sawyer_sim_controllers)/config/electric_gripper_controller.yaml"/>
+
+  <node if="$(arg electric_gripper)" name="electric_gripper_controller_spawner_stopped"
+        pkg="controller_manager" type="controller_manager" respawn="false" output="screen"
+        ns="/robot" args="spawn electric_gripper_controller"/>
+
+
+  <!-- convert joint states to TF transforms -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/robot/joint_states" />
+  </node>
+
+</launch>
