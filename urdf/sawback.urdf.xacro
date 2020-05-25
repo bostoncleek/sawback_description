@@ -1,103 +1,30 @@
 <?xml version="1.0" ?>
 <robot name="sawback" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+
   <xacro:arg name="gazebo" default="true"/>
   <xacro:arg name="pedestal" default="false"/>
   <xacro:arg name="static" default="false"/>
-  <xacro:arg name="electric_gripper" default="true"/>
+  <xacro:arg name="electric_gripper" default="false"/>
+
+  <!-- NU ridgeback urdf -->
+  <xacro:include filename="$(find sawback_description)/urdf/nu_ridgeback.urdf.xacro"/>
 
 
-  <!-- ridgeback -->
-  <xacro:include filename="$(find ridgeback_description)/urdf/ridgeback.urdf.xacro"/>
-
-  <!-- velodyne 16 lidar, bumblebee camera, sawyer computer -->
-  <xacro:include filename="$(find sawback_description)/urdf/nu_ridgeback_extras.urdf.xacro"/>
-
-  <!-- hokuyo lidar  -->
-  <xacro:include filename="$(find ridgeback_description)/urdf/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
-
-  <!-- hokuyo lidar front  -->
-  <xacro:hokuyo_ust-10lx_mount prefix="front"
-                               topic="front/scan"
-                               location="1" />
-
- <!-- hokuyo lidar rear -->
- <xacro:hokuyo_ust-10lx_mount prefix="rear"
-                              topic="rear/scan"
-                              location="-1" />
-
-
-  <!-- Sawyer Base URDF -->
-  <xacro:include filename="$(find sawyer_description)/urdf/sawyer_base.urdf.xacro">
+  <!-- sawyer urdf and gazebo -->
+  <xacro:include filename="$(find sawyer_description)/urdf/sawyer.urdf.xacro">
     <xacro:arg name="gazebo" value="${gazebo}"/>
     <xacro:arg name="pedestal" value="${pedestal}"/>
-  </xacro:include>
-
-  <!-- Electric Gripper End Effector -->
-  <xacro:if value="$(arg electric_gripper)">
-  <xacro:include filename="$(find sawyer_description)/urdf/sawyer_electric_gripper.urdf.xacro">
-    <xacro:arg name="gazebo" value="${gazebo}"/>
-  </xacro:include>
-  </xacro:if>
-
-  <!-- Sawyer gazebo -->
-  <xacro:if value="$(arg gazebo)">
-  <xacro:include filename="$(find sawyer_description)/urdf/sawyer_base.gazebo.xacro">
     <xacro:arg name="static" value="${static}"/>
-    <xacro:arg name="pedestal" value="${pedestal}"/>
+    <xacro:arg name="electric_gripper" value="${electric_gripper}"/>
   </xacro:include>
-  </xacro:if>
 
-  <!-- link form ridgeback to sawyer mounting plate  -->
-  <link name="sawyer_mount_link">
-    <inertial>
-      <origin xyz="0 0 0.5" rpy="0 0 0"/>
-      <mass value="1"/>
-      <inertia ixx="0.004086"  ixy="0"  ixz="0" iyy="0.004086" iyz="0" izz="0.008065" />
-    </inertial>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <cylinder radius="0.127" length="0.0254"/>
-      </geometry>
-      <material name="white">
-        <color rgba="1.0 1.0 1.0 1.0"/>
-      </material>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <cylinder radius="0.127" length="0.0254"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <joint name="sawyer_mount_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
-    <parent link="mid_mount"/>
-    <child link="sawyer_mount_link"/>
-  </joint>
-
-  <joint name="sawyer_base_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0.0 0.0 ${0.0254/2}"/>
-    <parent link="sawyer_mount_link"/>
+  <!-- joint between ridgeback and sawyer robots -->
+  <joint name="sawyer_base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.0127"/>
+    <parent link="mount_link"/>
     <child link="base"/>
   </joint>
-
-
-
-  <!-- <joint name="sawyer_base_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 ${0.0254/2}"/>
-    <parent link="sawyer_mount_link"/>
-    <child link="world"/>
-  </joint> -->
-
-  <!-- <joint name="sawyer_world_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 ${0.0254/2}"/>
-    <parent link="world"/>
-    <child link="base"/>
-  </joint> -->
 
 </robot>
