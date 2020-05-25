@@ -1,0 +1,92 @@
+<launch>
+  <!-- viz in rviz -->
+  <arg name="launch_rviz" default="false" doc="launch rviz"/>
+
+  <!-- simulate in gazebo -->
+  <arg name="launch_gazebo" default="true" doc="launch gazebo"/>
+
+  <!-- simulate sawback in gazebo -->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- sawyer Parameters -->
+  <arg name="electric_gripper" default="true"/>
+  <arg name="pedestal" default="false"/>
+  <arg name="static" default="false"/>
+
+  <!-- spawing state of sawback -->
+  <arg name="x" default="0.0" doc="x poisiton of sawback"/>
+  <arg name="y" default="0.0" doc="y poisiton of sawback"/>
+  <arg name="z" default="0.05" doc="z poisiton of sawback"/>
+  <arg name="yaw" default="0.0" doc="yaw of sawback"/>
+
+  <!-- initial joint angles sawyer  -->
+  <arg name="initial_joint_states"
+    default=" -J sawback::right_j0 0.0
+              -J sawback::right_j1 -0.9
+              -J sawback::right_j2 0.00
+              -J sawback::right_j3 0.00
+              -J sawback::right_j4 0.00
+              -J sawback::right_j5 0.00
+              -J sawback::right_j6 0.00
+              -J sawback::head_pan 0.00"/>
+
+
+  <!-- sawyer -->
+  <include file="$(find sawback_description)/launch/sawyer_gazebo.launch" >
+    <arg name="electric_gripper" value="$(arg electric_gripper)"/>
+    <arg name="pedestal" value="$(arg pedestal)"/>
+    <arg name="static" value="$(arg static)"/>
+  </include>
+
+
+  <!-- gazebo ros joint state publisher publishes the joint state for the front rocker -->
+  <remap from="/joint_states" to="/ridgeback/joint_states" />
+
+  <!-- ridgeback -->
+  <group ns="ridgeback">
+    <include file="$(find sawback_description)/launch/ridgeback_gazebo.launch" >
+    </include>
+  </group>
+
+
+  <!-- load urdf containing both sawyer and the ridgeback  -->
+  <param name="sawback_model"
+     command="$(find xacro)/xacro $(find sawback_description)/urdf/sawback.urdf.xacro
+          gazebo:=true electric_gripper:=$(arg electric_gripper)
+          pedestal:=$(arg pedestal) static:=$(arg static)"/>
+
+
+  <!-- spawn urdf containing both sawyer and the ridgeback  -->
+  <node name="urdf_spawn_sawback" pkg="gazebo_ros" type="spawn_model"
+     args="-param sawback_model -urdf -model sawback -unpause
+       -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw) $(arg initial_joint_states)"
+     respawn="false" output="screen"/>
+
+
+  <!-- tf between ridgeback and sawyer
+   each robot urdf is loaded into separate robot_description parameters
+   this is required for ros_control -->
+  <node pkg="tf2_ros" type="static_transform_publisher"
+     name="ridgeback_to_sawyer" args="0 0 0.0127 0 0 0 1 mount_link base"/>
+
+
+  <!-- load world empty -->
+  <include if="$(arg launch_gazebo)" file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="verbose" value="true"/>
+
+  </include>
+
+
+  <!-- rviz is a required package -->
+  <node if="$(arg launch_rviz)" name="rviz" pkg="rviz" type="rviz" required="true"
+                 args="-d $(find sawback_description)/config/sawback_gazebo.rviz"/>
+</launch>
