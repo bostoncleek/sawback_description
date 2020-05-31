@@ -43,6 +43,9 @@
   <node if="$(arg static)" pkg="tf2_ros" type="static_transform_publisher"
   name="base_to_world" args="0 0 0 0 0 0 1 world base" />
 
+  <!-- cuff state -->
+  <node pkg="rosbag" type="play" name="io_robot" args="-l $(find sawyer_gazebo)/share/bags/robot_io.bag" />
+
 
   <!-- sawyer cameras launch file -->
   <arg name="wrist_camera" default="right_hand_camera" />
