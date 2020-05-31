@@ -8,6 +8,9 @@ This package contains the files required for simulating the Sawback in gazebo an
 # How to run:
 The easiest way to get started is to download the rosinstall file or you will need the required packages bellow. In the src/ folder of your workspace run the following:
 
+You may also need to install the `velodyne-gazebo-plugins` package and the `effort_controllers` package.
+
+
 `mkdir -p catkin_ws/src` <br/>
 `cd ~/catkin_ws/src` <br/>
 `wstool init .` <br/>
@@ -16,16 +19,6 @@ The easiest way to get started is to download the rosinstall file or you will ne
 `cd ~/catkin_ws` <br/>
 `catkin_make`
 
-
-
-You may also need to install the `velodyne-gazebo-plugins` package and the `effort_controllers` package.
-
-
-You will need to modify two files in order for the the Sawback to come to life.
-
-First, in `ridgeback_description` package find the `ridgeback.gazebo` file and change line 5 to read `<robotNamespace>/ridgeback</robotNamespace>`
-
-Second, in the `sawyer_description` package find the `sawyer_base.urdf.xacro` file and change line 5 to read `<material name="sawyer_black">`. You can call the material name anything other than black, you can call it potato if you want.
 
 To vizualize the sawback in rviz: <br/>
 `roslaunch sawback_description view_sawback.launch`
@@ -49,7 +42,7 @@ To do both: <br/>
 
 
 # Known Issues
-There is a race condition when spawning a urdf with initial joint angles using the `-J` arg in gazebo. The workaround is that gazabo must be paused during startup and the `-unpause` arg must be passed to the `spawn_model` node. See [spawn_model -J initial joint positions not working #93](https://github.com/ros-simulation/gazebo_ros_pkgs/issues/93) for more information.
+There is a race condition between ros_control and gazebo when spawning a urdf with initial joint angles using the `-J` arg in the `spawn_model` node. The simplest solution is that gazabo must be paused during startup and the `-unpause` arg must be passed to the `spawn_model` node. See [spawn_model -J initial joint positions not working #93](https://github.com/ros-simulation/gazebo_ros_pkgs/issues/93) for more information. There are many suggestions in this thread. Some users suggest the order in which ros_control and gazebo services are called can prevent the race condition. Based on the testing results the order in which these services are called does not reliably prevent the issue. Another alternative is to write a world plugin that dynamically creates a joint between the two robots at run time. The world plugin does exist in the git commits for this package that can do this. See SHA1 ID: 988d428 ("world plugin to dynamically create a joint between the robots at run time", 2020-05-25)
 
 
 # The Sawback
