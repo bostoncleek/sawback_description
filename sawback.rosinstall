@@ -23,6 +23,14 @@
     uri: https://github.com/bostoncleek/ridgeback.git
     version: melodic-devel
 - git:
+    local-name: ridgeback_simulator
+    uri: https://github.com/bostoncleek/ridgeback_simulator.git
+    version: melodic-devel
+- git:
+    local-name: ridgeback_desktop
+    uri: https://github.com/bostoncleek/ridgeback_desktop.git
+    version: melodic-devel
+- git:
     local-name: sawback_description
     uri: https://github.com/bostoncleek/sawback_description.git
     version: master
