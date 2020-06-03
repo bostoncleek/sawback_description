@@ -22,14 +22,25 @@
   <xacro:include filename="$(find ridgeback_description)/urdf/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
 
   <!-- hokuyo lidar front  -->
-  <xacro:hokuyo_ust-10lx_mount prefix="front"
-                               topic="front/scan"
+  <xacro:hokuyo_ust-10lx_mount prefix="/front"
+                               topic="/front/scan"
                                location="1" />
 
  <!-- hokuyo lidar rear -->
- <xacro:hokuyo_ust-10lx_mount prefix="rear"
-                              topic="rear/scan"
+ <xacro:hokuyo_ust-10lx_mount prefix="/rear"
+                              topic="/rear/scan"
                               location="-1" />
+
+  <!-- If enabled, generate the optional Microstrain 3DM-GX2/3 IMU payload. -->
+  <xacro:include filename="$(find ridgeback_description)/urdf/accessories/microstrain_imu.urdf.xacro" />
+  <xacro:if value="$(optenv RIDGEBACK_MICROSTRAIN_IMU 0)">
+    <xacro:microstrain_imu prefix="$(optenv RIDGEBACK_MICROSTRAIN_IMU_PREFIX upgraded)"
+                           mount_link="$(optenv RIDGEBACK_MICROSTRAIN_IMU_MOUNT mid)_mount" >
+      <origin xyz="$(optenv RIDGEBACK_MICROSTRAIN_IMU_OFFSET 0 0 0)"
+              rpy="$(optenv RIDGEBACK_MICROSTRAIN_IMU_RPY 0 0 0)" />
+    </xacro:microstrain_imu>
+  </xacro:if>
+
 
   <!-- mount sawyer -->
   <link name="mount_link">
