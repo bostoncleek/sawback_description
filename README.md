@@ -1,5 +1,4 @@
 ### Author: Boston Cleek
-### Date: 5/25/20
 
 # Overview
 This package contains the files required for simulating the Sawback in gazebo and in rviz. The Sawback is comprised of both a Ridgeback mobile base and a Sawyer manipulator. The following sensors are includes in the model: Velodyne VLP16 Lidar, 2 Hokoyu Lidars, and Bumblebee2 Stereo Camera. The Sawback is the ruler of the Planet Omicron Persei 8.
