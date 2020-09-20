@@ -22,13 +22,13 @@
   <xacro:include filename="$(find ridgeback_description)/urdf/accessories/hokuyo_ust-10lx_mount.urdf.xacro" />
 
   <!-- hokuyo lidar front  -->
-  <xacro:hokuyo_ust-10lx_mount prefix="/front"
-                               topic="/front/scan"
+  <xacro:hokuyo_ust-10lx_mount prefix="front"
+                               topic="front/scan"
                                location="1" />
 
  <!-- hokuyo lidar rear -->
- <xacro:hokuyo_ust-10lx_mount prefix="/rear"
-                              topic="/rear/scan"
+ <xacro:hokuyo_ust-10lx_mount prefix="rear"
+                              topic="rear/scan"
                               location="-1" />
 
   <!-- If enabled, generate the optional Microstrain 3DM-GX2/3 IMU payload. -->
@@ -47,12 +47,12 @@
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="1"/>
-      <inertia ixx="0.004086"  ixy="0"  ixz="0" iyy="0.004086" iyz="0" izz="0.008065" />
+      <inertia ixx="0.002789"  ixy="0"  ixz="0" iyy="0.002789" iyz="0" izz="0.00551" />
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.127" length="0.0254"/>
+        <cylinder radius="0.105" length="0.0198"/>
       </geometry>
       <material name="white">
         <color rgba="1.0 1.0 1.0 1.0"/>
@@ -61,13 +61,13 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.127" length="0.0254"/>
+        <cylinder radius="0.105" length="0.0198"/>
       </geometry>
     </collision>
   </link>
 
   <joint name="mount_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.280"/>
+    <origin rpy="0 0 0" xyz="0.19 0.0 0.280"/>
     <parent link="base_link"/>
     <child link="mount_link"/>
   </joint>
