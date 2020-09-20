@@ -2,10 +2,10 @@
 <robot name="sawback" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
-  <xacro:arg name="gazebo" default="true"/>
+  <xacro:arg name="gazebo" default="false"/>
   <xacro:arg name="pedestal" default="false"/>
   <xacro:arg name="static" default="false"/>
-  <xacro:arg name="electric_gripper" default="false"/>
+  <xacro:arg name="electric_gripper" default="true"/>
 
   <!-- NU ridgeback urdf -->
   <xacro:include filename="$(find sawback_description)/urdf/nu_ridgeback.urdf.xacro"/>
@@ -22,7 +22,7 @@
 
   <!-- joint between ridgeback and sawyer robots -->
   <joint name="sawyer_base_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.0127"/>
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.0099"/>
     <parent link="mount_link"/>
     <child link="base"/>
   </joint>
